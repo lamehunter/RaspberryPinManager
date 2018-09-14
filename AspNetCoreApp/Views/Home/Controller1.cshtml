@@ -1,0 +1,32 @@
+﻿@using Test.Models
+@model Test.Models.RandomPin
+
+@{
+    ViewData["Title"] = "Device Management";
+}
+<div class="row">
+
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(model => model.PinNo)
+        @Html.TextBoxFor(model => model.PinNo)
+        @Html.HiddenFor(model => model.PinNo)
+
+        @Html.LabelFor(model => model.UiSetPinState)
+        @Html.DropDownListFor(model => model.UiSetPinState,
+            new SelectList(new bool[]{true, false}), null, new { @class = "dropdown" })
+        @Html.HiddenFor(model => model.UiSetPinState)
+
+        <input type="submit" value="Turn On" formaction=@Url.Action("Controller1Updated", Model) formmethod="post" class="btn btn-primary" />
+    }
+
+    <hr />
+    <h5>Current setting for pin</h5>
+    <p>PinNo: @Model.PinNo</p>
+    <p>PinStatus: @Model.GetPinState</p>
+    <hr />
+    @Html.ActionLink("go to Controller1Updated", "Controller1Updated", "Home")
+    <hr />
+    @Html.ActionLink("go to Controller1", "Controller1", "Home")
+</div>
